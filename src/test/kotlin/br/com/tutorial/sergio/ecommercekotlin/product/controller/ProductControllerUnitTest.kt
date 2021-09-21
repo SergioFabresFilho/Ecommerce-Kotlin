@@ -1,6 +1,7 @@
 package br.com.tutorial.sergio.ecommercekotlin.product.controller
 
-import br.com.tutorial.sergio.ecommercekotlin.product.domain.exception.ProductNotFountException
+import br.com.tutorial.sergio.ecommercekotlin.common.domain.exception.NotFoundException
+import br.com.tutorial.sergio.ecommercekotlin.common.domain.exception.exceptionMessage.ExceptionMessage
 import br.com.tutorial.sergio.ecommercekotlin.product.domain.mother.ProductMother
 import br.com.tutorial.sergio.ecommercekotlin.product.domain.request.ProductCreateRequest
 import br.com.tutorial.sergio.ecommercekotlin.product.service.ProductService
@@ -90,7 +91,7 @@ class ProductControllerUnitTest {
     fun `Given invalid id When findById Then return not found`() {
         val id = 1L
 
-        given(productService.findById(id)).willThrow(ProductNotFountException())
+        given(productService.findById(id)).willThrow(NotFoundException(ExceptionMessage.PRODUCT_NOT_FOUND))
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get(productsUrlWithId, id)

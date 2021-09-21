@@ -1,7 +1,8 @@
 package br.com.tutorial.sergio.ecommercekotlin.product.service.impl
 
+import br.com.tutorial.sergio.ecommercekotlin.common.domain.exception.NotFoundException
+import br.com.tutorial.sergio.ecommercekotlin.common.domain.exception.exceptionMessage.ExceptionMessage
 import br.com.tutorial.sergio.ecommercekotlin.product.domain.entity.Product
-import br.com.tutorial.sergio.ecommercekotlin.product.domain.exception.ProductNotFountException
 import br.com.tutorial.sergio.ecommercekotlin.product.domain.mapper.ProductMapper
 import br.com.tutorial.sergio.ecommercekotlin.product.domain.mother.ProductMother
 import br.com.tutorial.sergio.ecommercekotlin.product.repository.ProductRepository
@@ -83,9 +84,9 @@ class ProductServiceImplUnitTest {
 
         given(productRepository.findById(id)).willReturn(Optional.empty())
 
-        thenExceptionOfType(ProductNotFountException::class.java).isThrownBy {
+        thenExceptionOfType(NotFoundException::class.java).isThrownBy {
             productService.findById(id)
-        }
+        }.withMessage(ExceptionMessage.PRODUCT_NOT_FOUND.toString())
 
         verify(productRepository, times(1)).findById(id)
     }

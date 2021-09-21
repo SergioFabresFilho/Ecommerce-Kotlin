@@ -1,6 +1,7 @@
 package br.com.tutorial.sergio.ecommercekotlin.product.service.impl
 
-import br.com.tutorial.sergio.ecommercekotlin.product.domain.exception.ProductNotFountException
+import br.com.tutorial.sergio.ecommercekotlin.common.domain.exception.NotFoundException
+import br.com.tutorial.sergio.ecommercekotlin.common.domain.exception.exceptionMessage.ExceptionMessage
 import br.com.tutorial.sergio.ecommercekotlin.product.domain.mapper.ProductMapper
 import br.com.tutorial.sergio.ecommercekotlin.product.domain.request.ProductCreateRequest
 import br.com.tutorial.sergio.ecommercekotlin.product.domain.response.ProductGetResponse
@@ -26,7 +27,7 @@ class ProductServiceImpl(
     }
 
     override fun findById(id: Long): ProductGetResponse {
-        val product = productRepository.findById(id).orElseThrow { ProductNotFountException() }
+        val product = productRepository.findById(id).orElseThrow { NotFoundException(ExceptionMessage.PRODUCT_NOT_FOUND) }
 
         return productMapper.toProductGetResponse(product)
     }
